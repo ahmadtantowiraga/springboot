@@ -1,17 +1,27 @@
 package com.enigma.enigma_shop.services.impl;
 
+import com.enigma.enigma_shop.dto.request.SearchCustomerRequest;
 import com.enigma.enigma_shop.entity.Customer;
 import com.enigma.enigma_shop.repository.CustomerRepository;
 import com.enigma.enigma_shop.services.CustomerService;
+import com.enigma.enigma_shop.spesification.CustomerSpesification;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 @RequiredArgsConstructor
 @Service
 public class CustomerServiceImpl implements CustomerService {
     private final CustomerRepository customerRepository;
+    private final EntityManager entityManager;
     @Override
     public Customer create(Customer customer) {
         return customerRepository.saveAndFlush(customer);
@@ -24,8 +34,9 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public List<Customer> getAll() {
-        return customerRepository.findAll();
+    public List<Customer> getAll(SearchCustomerRequest request) {
+        Specification<Customer> specification= CustomerSpesification.getSpecification(request);
+        return customerRepository.findAll(specification);
     }
 
     @Override
@@ -42,15 +53,16 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public List<Customer> findByNameAndMobilePhoneNoAndAddressAndBirthDateAndStatus(String name, String mobilePhoneNo, String address, Date date, Boolean status) {
-
-        if (name==null && mobilePhoneNo==null && address==null && date==null && status==null){
-            return getAll();
-        }
         return customerRepository.findByNameAndMobilePhoneNoAndAddressAndBirthDateAndStatus(name, mobilePhoneNo, address, date, status);
     }
 
     @Override
     public List<Customer> findByNameOrMobilePhoneNoOrAddressOrBirthDateOrStatus(String name, String mobilePhoneNo, String address, Date date, Boolean status) {
         return customerRepository.findByNameOrMobilePhoneNoOrAddressOrBirthDateOrStatus(name, mobilePhoneNo, address, date, status);
+    }
+
+    @Override
+    public void updateStatusById(String id, Boolean status) {
+            customerRepository.updateStatus(id, status);
     }
 }

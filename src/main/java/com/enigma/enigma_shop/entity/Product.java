@@ -14,6 +14,7 @@ import lombok.Setter;
 @Entity
 @Table(name= ConstanTable.PRODUCT_TABLE)
 public class Product {
+
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
