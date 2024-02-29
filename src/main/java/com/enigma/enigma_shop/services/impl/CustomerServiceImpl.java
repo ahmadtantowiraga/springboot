@@ -21,7 +21,7 @@ import java.util.List;
 @Service
 public class CustomerServiceImpl implements CustomerService {
     private final CustomerRepository customerRepository;
-    private final EntityManager entityManager;
+
     @Override
     public Customer create(Customer customer) {
         return customerRepository.saveAndFlush(customer);
