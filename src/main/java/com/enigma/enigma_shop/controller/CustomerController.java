@@ -43,11 +43,11 @@ public class CustomerController {
         return ResponseEntity.ok(customer);
     }
 
-    @PostMapping
-    public ResponseEntity<Customer> create(@RequestBody Customer customer){
-        Customer customers=customerService.create(customer);
-        return ResponseEntity.status(HttpStatus.CREATED).body(customers);
-    }
+//    @PostMapping
+//    public ResponseEntity<Customer> create(@RequestBody Customer customer){
+//        Customer customers=customerService.create(customer);
+//        return ResponseEntity.status(HttpStatus.CREATED).body(customers);
+//    }
 
     @DeleteMapping(path = "/{id}")
     public void delete(@PathVariable String id){

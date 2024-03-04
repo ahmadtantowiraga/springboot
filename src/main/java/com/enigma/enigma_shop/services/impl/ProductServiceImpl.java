@@ -7,6 +7,7 @@ import com.enigma.enigma_shop.repository.ProductRepository;
 import com.enigma.enigma_shop.services.ProductService;
 import com.enigma.enigma_shop.spesification.ProductSpecification;
 import com.enigma.enigma_shop.util.ValidationUtil;
+import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -26,6 +27,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
+    private final EntityManager entityManager;
     private final ProductRepository productRepository;
     private final ValidationUtil validationUtil;
 

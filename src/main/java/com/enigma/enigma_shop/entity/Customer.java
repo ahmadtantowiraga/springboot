@@ -3,10 +3,7 @@ package com.enigma.enigma_shop.entity;
 import com.enigma.enigma_shop.constant.ConstanTable;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Date;
 
@@ -15,6 +12,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Builder
 @Table(name = ConstanTable.CUSTOMER_TABLE)
 public class Customer {
     @Id
@@ -37,4 +35,8 @@ public class Customer {
 
     @Column(name="status")
     private Boolean status;
+
+    @OneToOne
+    @JoinColumn(name="user_account_id", unique=true)
+    private UserAccount userAccount;
 }
